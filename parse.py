@@ -28,7 +28,7 @@ if __name__ == "__main__":
             f.write(t.html())
 
         d = pq(filename='docs/index.html')
-        d('#dir').append(f'<a href="/{dir_name}">{dir_name}</a>')
+        d('#dir').append(f'<a href="{dir_name}">{dir_name}</a>')
         
         with open('docs/index.html', 'w') as f:
             f.write(d.html())
