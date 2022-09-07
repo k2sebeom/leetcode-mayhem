@@ -3,6 +3,7 @@
     </head>
     <body>
         <h1>top-interview-questions</h1>
+        <button id="random-btn">Give me Random</button>
         <div id="root">
             <div>
                     <h3>Add Two Numbers</h3>
@@ -65,4 +66,15 @@ class Solution:
 </code></pre>
                 </div>
         </div>
+
+        <script>
+            const rbtn = document.querySelector('#random-btn');
+            rbtn.onclick = function () {
+                const root = document.querySelector('#root');
+                const count = root.childElementCount;
+                const idx = Math.floor(Math.random() * count);
+
+                root.children[idx].scrollIntoView();
+            };
+        </script>
     </body>

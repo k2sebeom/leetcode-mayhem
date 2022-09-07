@@ -5,7 +5,19 @@
     </head>
     <body>
         <h1>Name of the Set</h1>
+        <button id="random-btn">Give me Random</button>
         <div id="root">
         </div>
+
+        <script>
+            const rbtn = document.querySelector('#random-btn');
+            rbtn.onclick = function () {
+                const root = document.querySelector('#root');
+                const count = root.childElementCount;
+                const idx = Math.floor(Math.random() * count);
+
+                root.children[idx].scrollIntoView();
+            };
+        </script>
     </body>
 </html>
