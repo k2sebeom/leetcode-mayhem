@@ -48,9 +48,31 @@ class Solution:
                 </div>
         
             <div>
+                    <h3>Longest Substring Without Repeating Characters</h3>
+                    <a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">link to leetcode</a>
+                    <p>Comment: It is an O(n) algorithm with "sliding window" technique. Log the index of the character while sliding thru the string, and once you find a character that you have seen before, shrink the window so that you look into the longest window without repeating that character.</p>
+                    <pre><code>'''
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -&gt; int:
+        if len(s) == 0:
+            return 0
+        start = 0
+        max_len = 0
+        where = {}
+        for i in range(len(s)):
+            if s[i] in where and where[s[i]] &gt;= start:
+                start = where[s[i]] + 1
+            where[s[i]] = i
+            max_len = max(max_len, i - start + 1)
+        return max_len
+</code></pre>
+                </div>
+        
+            <div>
                     <h3>Two Sum</h3>
                     <a href="https://leetcode.com/problems/two-sum/">link to leetcode</a>
-                    <p>Comment: Hello</p>
+                    <p>Comment: None</p>
                     <pre><code>'''
 
 class Solution:
