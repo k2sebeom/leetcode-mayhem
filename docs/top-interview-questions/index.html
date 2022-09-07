@@ -1,20 +1,23 @@
-# Study Note
+<head>
+        <title>LeetCode | top-interview-questions</title>
+    </head>
+    <body>
+        <h1>top-interview-questions</h1>
+        <div id="root">
+            <div>
+                    <h3>Add Two Numbers</h3>
+                    <a href="https://leetcode.com/problems/add-two-numbers/">link to leetcode</a>
+                    <p>Comment: None</p>
+                    <pre><code>'''
 
-## Add Two Numbers
-- Source: https://leetcode.com/problems/add-two-numbers/
-- Comment:
-
-
-
-```python
 class Solution:
-    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -&gt; Optional[ListNode]:
         carry = 0
         node = ListNode(0)
         head = node
         # While at least one of the lists has not ended
         while l1 is not None or l2 is not None:
-            # if both not ended -> do calculation and leave carry
+            # if both not ended -&gt; do calculation and leave carry
             if l1 is not None and l2 is not None:
                 val = l1.val + l2.val + carry
                 carry = val // 10
@@ -23,7 +26,7 @@ class Solution:
                 head = head.next
                 l1 = l1.next
                 l2 = l2.next
-            # if one ended -> add carry and do calculation
+            # if one ended -&gt; add carry and do calculation
             elif l1 is None:
                 val = l2.val + carry
                 carry = val // 10
@@ -38,21 +41,19 @@ class Solution:
 
                 head = head.next
                 l1 = l1.next
-        if carry > 0:
+        if carry &gt; 0:
             head.next = ListNode(carry)
-        return node.next
-```
+        return node.next</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Two Sum</h3>
+                    <a href="https://leetcode.com/problems/two-sum/">link to leetcode</a>
+                    <p>Comment: Hello</p>
+                    <pre><code>'''
 
-
-## Two Sum
-- Source: https://leetcode.com/problems/two-sum/
-- Comment:
-
-
-
-```python
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
+    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:
         indices = dict()
         for i, value in enumerate(nums):
             indices[value] = i
@@ -61,5 +62,7 @@ class Solution:
             if remaining in indices and indices[remaining] != i:
                 return [i, indices[remaining]]
         return [-1, -1]
-
-```
+</code></pre>
+                </div>
+        </div>
+    </body>
