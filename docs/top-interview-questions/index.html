@@ -6,6 +6,30 @@
         <button id="random-btn">Give me Random</button>
         <div id="root">
             <div>
+                    <h3>Zigzag Conversion</h3>
+                    <a href="https://leetcode.com/problems/zigzag-conversion/">link to leetcode</a>
+                    <p>Comment: O(n) algorithm. Handle the edge case and build some rows</p>
+                    <pre><code>'''
+
+class Solution:
+    def convert(self, s: str, numRows: int) -&gt; str:
+        if numRows == 1 or numRows &gt;= len(s): # Edge case
+            return s
+
+        rows = [''] * numRows
+        curr, direction = 0, 1
+        for x in s:
+            rows[curr] += x
+            if curr == numRows - 1:
+                direction = -1
+            elif curr == 0:
+                direction = 1
+            curr += direction
+        
+        return ''.join(rows)</code></pre>
+                </div>
+        
+            <div>
                     <h3>Add Two Numbers</h3>
                     <a href="https://leetcode.com/problems/add-two-numbers/">link to leetcode</a>
                     <p>Comment: None</p>
