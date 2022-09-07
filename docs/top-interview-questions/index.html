@@ -94,6 +94,30 @@ class Solution:
                 </div>
         
             <div>
+                    <h3>Reverse Integer</h3>
+                    <a href="https://leetcode.com/problems/reverse-integer/">link to leetcode</a>
+                    <p>Comment: None</p>
+                    <pre><code>'''
+
+class Solution:
+    def reverse(self, x: int) -&gt; int:
+        result = 0
+
+        if x &lt; 0:
+            symbol = -1
+            x = -x
+        else:
+            symbol = 1
+
+        while x:
+            result = result * 10 + x % 10
+            x = x // 10
+
+        return 0 if result &gt; pow(2, 31) else result * symbol
+    </code></pre>
+                </div>
+        
+            <div>
                     <h3>Longest Palindromic Substring</h3>
                     <a href="https://leetcode.com/problems/longest-palindromic-substring/">link to leetcode</a>
                     <p>Comment: It is an O(n^2) algorithm. When it comes to a palindrome, expanding from middle to left right index is useful. I am not sure how to optimize it to O(n). REMEMBER get_pal method. It may come handy.</p>
