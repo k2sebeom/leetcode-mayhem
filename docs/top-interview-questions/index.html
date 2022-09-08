@@ -6,6 +6,107 @@
         <button id="random-btn">Give me Random</button>
         <div id="root">
             <div>
+                    <h3>3Sum</h3>
+                    <a href="https://leetcode.com/problems/3sum/">link to leetcode</a>
+                    <p>Comment: It categorizes cases into different scenarios. If there are managable amount of possibilities, it may help to break down to cases.</p>
+                    <pre><code>'''
+
+class Solution:
+    def threeSum(self, nums: List[int]) -&gt; List[List[int]]:
+        res = set()
+
+	    #1. Split nums into three lists: negative numbers, positive numbers, and zeros
+        n, p, z = [], [], []
+        for num in nums:
+            if num &gt; 0:
+                p.append(num)
+            elif num &lt; 0: 
+                n.append(num)
+            else:
+                z.append(num)
+
+        #2. Create a separate set for negatives and positives for O(1) look-up times
+        N, P = set(n), set(p)
+
+        #3. If there is at least 1 zero in the list, add all cases where -num exists in N and num exists in P
+        #   i.e. (-3, 0, 3) = 0
+        if z:
+            for num in P:
+                if -num in N:
+                    res.add((-num, 0, num))
+
+        #4. If there are at least 3 zeros in the list then also include (0, 0, 0) = 0
+        if len(z) &gt;= 3:
+            res.add((0,0,0))
+
+        #4. For all pairs of negative numbers (-3, -1), check to see if their complement (4)
+        #   exists in the positive number set
+        for i in range(len(n)):
+            for j in range(i+1, len(n)):
+                target = -(n[i] + n[j])
+                if target in P:
+                    res.add(tuple(sorted([n[i],n[j],target])))
+
+        #5. For all pairs of positive numbers (1, 1), check to see if their complement (-2)
+        #   exists in the negative number set
+        for i in range(len(p)):
+            for j in range(i+1, len(p)):
+                target = -(p[i] + p[j])
+                if target in N:
+                    res.add(tuple(sorted([p[i],p[j],target])))
+
+        return res</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Container With Most Water</h3>
+                    <a href="https://leetcode.com/problems/container-with-most-water/">link to leetcode</a>
+                    <p>Comment: O(n) greedy algorithm with two pointers. This may work because greedy always stays ahead. For example, it you have checked idx 1 and 3, moving the pointer of the taller tale will be meaningless since the shorter tale determines the amount of water.</p>
+                    <pre><code>'''
+
+class Solution:
+    def maxArea(self, height: List[int]) -&gt; int:
+        result, i, j = 0, 0, len(height)-1
+        while (i &lt; j):
+            res = min(height[i], height[j]) * (j - i)
+            if height[i] &lt;= height[j]:
+                i += 1
+            else:
+                j -= 1
+            if res &gt; result: result = res
+        return result</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Longest Common Prefix</h3>
+                    <a href="https://leetcode.com/problems/longest-common-prefix/">link to leetcode</a>
+                    <p>Comment: Pretty straight forward</p>
+                    <pre><code>'''
+
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -&gt; str:
+        if not strs:
+            return ""
+        min_len = len(strs[0])
+        prefix = ""
+        for s in strs:
+            min_len = min(min_len, len(s))
+        
+        for i in range(min_len):
+            c = strs[0][i]
+            common = True
+            for s in strs:
+                if s[i] != c:
+                    common = False
+                    break
+            if common:
+                prefix += c
+            else:
+                break
+        return prefix</code></pre>
+                </div>
+        
+            <div>
                     <h3>Zigzag Conversion</h3>
                     <a href="https://leetcode.com/problems/zigzag-conversion/">link to leetcode</a>
                     <p>Comment: O(n) algorithm. Handle the edge case and build some rows</p>
@@ -162,6 +263,49 @@ class Solution:
             if remaining in indices and indices[remaining] != i:
                 return [i, indices[remaining]]
         return [-1, -1]
+</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Letter Combinations of a Phone Number</h3>
+                    <a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/">link to leetcode</a>
+                    <p>Comment: Sometimes, a brute force recursion might work</p>
+                    <pre><code>'''
+
+class Solution:
+    MEMO = {}
+    
+    def letterCombinations(self, digits: str) -&gt; List[str]:
+        phone = {
+            '2': 'abc',
+            '3': 'def',
+            '4': 'ghi',
+            '5': 'jkl',
+            '6': 'mno',
+            '7': 'pqrs',
+            '8': 'tuv',
+            '9': 'wxyz'
+        }
+        
+        if digits in self.MEMO:
+            print(f'{digits} in memo')
+            return self.MEMO[digits]
+        
+        if not digits:
+            return ""
+        
+        if len(digits) == 1:
+            self.MEMO[digits] = [c for c in phone[digits[0]]]
+            return [c for c in phone[digits[0]]]
+            
+        prev = self.letterCombinations(digits[1:])
+        
+        result = []
+        
+        for c in phone[digits[0]]:
+            result += [c + comb for comb in prev]
+        self.MEMO[digits] = result
+        return result
 </code></pre>
                 </div>
         </div>
