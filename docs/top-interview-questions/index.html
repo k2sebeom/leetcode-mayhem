@@ -6,6 +6,49 @@
         <button id="random-btn">Give me Random</button>
         <div id="root">
             <div>
+                    <h3>Spiral Matrix</h3>
+                    <a href="https://leetcode.com/problems/spiral-matrix/">link to leetcode</a>
+                    <p>Comment: Think of basic matrix operation like rotate and transpose</p>
+                    <pre><code>'''
+
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -&gt; List[int]:
+        def rotate(matrix: List[List[int]]) -&gt; List[List[int]]:
+            return [[row[::-1][i] for row in matrix] for i in range(len(matrix[0]))]
+    
+        curr = matrix
+        result = []
+        while curr:
+            row = curr[0]
+            result += row
+            curr.pop(0)
+            if curr:
+                curr = rotate(curr)
+        return result
+</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Climbing Stairs</h3>
+                    <a href="https://leetcode.com/problems/climbing-stairs/">link to leetcode</a>
+                    <p>Comment: Dynamic Programming works like a charm</p>
+                    <pre><code>'''
+
+class Solution:
+    def climbStairs(self, n: int) -&gt; int:
+        if n &lt; 3:
+            return n
+        
+        dp = [0] * n
+        dp[0] = 1
+        dp[1] = 2
+        
+        for i in range(2, n):
+            dp[i] = dp[i - 1] + dp[i - 2]
+        return dp[-1]</code></pre>
+                </div>
+        
+            <div>
                     <h3>3Sum</h3>
                     <a href="https://leetcode.com/problems/3sum/">link to leetcode</a>
                     <p>Comment: It categorizes cases into different scenarios. If there are managable amount of possibilities, it may help to break down to cases.</p>
@@ -59,6 +102,29 @@ class Solution:
                 </div>
         
             <div>
+                    <h3>Pow(x, n)</h3>
+                    <a href="https://leetcode.com/problems/powx-n/">link to leetcode</a>
+                    <p>Comment: If step by step is too exhaustive, think of dividing by two, as well as recursion.</p>
+                    <pre><code>'''
+
+class Solution:
+    def myPow(self, x: float, n: int) -&gt; float:
+        def posPow(x: float, n: int) -&gt; float:
+            if n == 0:
+                return 1
+            if n == 1:
+                return x
+            prev = posPow(x, n // 2)
+            if n % 2 == 0:
+                return prev * prev
+            else:
+                return prev * prev * x
+        
+        result = posPow(x, abs(n))
+        return result if n &gt; 0 else 1 / result</code></pre>
+                </div>
+        
+            <div>
                     <h3>Container With Most Water</h3>
                     <a href="https://leetcode.com/problems/container-with-most-water/">link to leetcode</a>
                     <p>Comment: O(n) greedy algorithm with two pointers. This may work because greedy always stays ahead. For example, it you have checked idx 1 and 3, moving the pointer of the taller tale will be meaningless since the shorter tale determines the amount of water.</p>
@@ -100,6 +166,26 @@ class Solution:
                 if nums[start] != target: start += 1
                 if nums[end] != target: end -= 1
         return [-1,-1]</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Jump Game</h3>
+                    <a href="https://leetcode.com/problems/jump-game/">link to leetcode</a>
+                    <p>Comment: Define dynamic programming table thoughtfully</p>
+                    <pre><code>'''
+
+class Solution:
+    def canJump(self, nums: List[int]) -&gt; bool:
+        last = len(nums) - 1
+        db = [False] * len(nums)
+        db[-1] = True
+
+        for i in range(len(nums) - 2, -1, -1):
+            db[i] = i + nums[i] &gt;= last
+            if db[i]:
+                last = i
+        return db[0]
+</code></pre>
                 </div>
         
             <div>
@@ -262,6 +348,21 @@ class Solution:
                 </div>
         
             <div>
+                    <h3>Rotate Image</h3>
+                    <a href="https://leetcode.com/problems/rotate-image/">link to leetcode</a>
+                    <p>Comment: i th row becomes jth column reversed.</p>
+                    <pre><code>'''
+
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -&gt; None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        matrix[:] = [[row[i] for row in matrix[::-1]] for i in range(len(matrix))]
+</code></pre>
+                </div>
+        
+            <div>
                     <h3>Remove Nth Node From End of List</h3>
                     <a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/">link to leetcode</a>
                     <p>Comment: None</p>
@@ -400,6 +501,28 @@ class Solution:
                 </div>
         
             <div>
+                    <h3>Merge Intervals</h3>
+                    <a href="https://leetcode.com/problems/merge-intervals/">link to leetcode</a>
+                    <p>Comment: Sort the array if that seems easier. Also, think of known problems like interval scheduling.</p>
+                    <pre><code>'''
+
+class Solution:
+    def merge(self, intervals: List[List[int]]) -&gt; List[List[int]]:
+        intervals.sort(key =lambda x: x[0])
+
+        result = []
+        s, e = intervals[0]
+        for interval in intervals[1:]:
+            if interval[0] &gt; e:
+                result.append([s, e])
+                s = interval[0]
+            e = max(interval[1], e)
+
+        result.append([s, e])
+        return result</code></pre>
+                </div>
+        
+            <div>
                     <h3>Search in Rotated Sorted Array</h3>
                     <a href="https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/">link to leetcode</a>
                     <p>Comment: Focus on the basic. Check if the known algorithms work</p>
@@ -430,6 +553,23 @@ class Solution:
                     high = mid - 1
 
         return -1</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Unique Paths</h3>
+                    <a href="https://leetcode.com/problems/unique-paths/">link to leetcode</a>
+                    <p>Comment: Standard DP problem</p>
+                    <pre><code>'''
+
+class Solution:
+    def uniquePaths(self, m: int, n: int) -&gt; int:
+        dp = [[0] * (n - 1) + [1] for _ in range(m - 1)]
+        dp.append([1] * n)
+
+        for i in range(m - 2, -1, -1):
+            for j in range(n - 2, -1, -1):
+                dp[i][j] = dp[i + 1][j] + dp[i][j + 1]
+        return dp[0][0]</code></pre>
                 </div>
         
             <div>
@@ -473,6 +613,61 @@ class Solution:
         self.MEMO[digits] = result
         return result
 </code></pre>
+                </div>
+        
+            <div>
+                    <h3>Permutations</h3>
+                    <a href="https://leetcode.com/problems/permutations/">link to leetcode</a>
+                    <p>Comment: A simple recursion with memoization may work like a charm.</p>
+                    <pre><code>'''
+
+class Solution:
+    MEMO = dict()
+    
+    def permute(self, nums: List[int]) -&gt; List[List[int]]:
+        if len(nums) &lt;= 1:
+            return [nums]
+        
+        if str(nums) in self.MEMO:
+            print(f"{nums} in memo!")
+            return self.MEMO[str(nums)]
+        
+        result = []
+        for i, n in enumerate(nums):
+            rest = nums[:i] + nums[i+1:]
+            prev = self.permute(rest)
+            for p in prev:
+                result.append([n] + p)
+        self.MEMO[str(nums)] = result
+        return result
+            </code></pre>
+                </div>
+        
+            <div>
+                    <h3>Set Matrix Zeroes</h3>
+                    <a href="https://leetcode.com/problems/set-matrix-zeroes/">link to leetcode</a>
+                    <p>Comment: Scan the matrix first and then set each cell accordingly.</p>
+                    <pre><code>'''
+
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -&gt; None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        row = set()
+        column = set()
+        
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                if matrix[i][j] == 0:
+                    row.add(i)
+                    column.add(j)          
+        for i in row:
+            for j in range(len(matrix[0])):
+                matrix[i][j] = 0
+        for i in column:
+            for j in range(len(matrix)):
+                matrix[j][i] = 0 </code></pre>
                 </div>
         
             <div>
@@ -546,6 +741,21 @@ class Solution:
     def is_unit_valid(self, unit):
         unit = [i for i in unit if i != '.']
         return len(set(unit)) == len(unit)</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Maximum Subarray</h3>
+                    <a href="https://leetcode.com/problems/maximum-subarray/">link to leetcode</a>
+                    <p>Comment: Dynamic programming is good. Know when to use greedy algorithm and not</p>
+                    <pre><code>'''
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -&gt; int:
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        for i in range(1, len(nums)):
+            dp[i] = max(nums[i], dp[i - 1] + nums[i])
+        return max(dp)</code></pre>
                 </div>
         </div>
 
