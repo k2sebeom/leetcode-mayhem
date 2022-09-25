@@ -6,11 +6,10 @@ from yaml import load, Loader
 
 
 def process_text(raw_text: str):
-    idx = raw_text[3:].find("'''")
-    meta = raw_text[3:idx + 1]
+    idx = raw_text[3:].find("'''") + 3
+    meta = raw_text[3:idx - 2]
     data = load(meta, Loader)
-
-    code = raw_text[idx + 3:]
+    code = raw_text[idx + 3:].lstrip()
     return data, code
 
 
@@ -21,17 +20,17 @@ if __name__ == "__main__":
     if not os.path.isdir(target):
         os.mkdir(target)
 
-        t = pq(filename='docs/template.html')
-        t('title').text(f'LeetCode | {dir_name}')
-        t('h1').text(dir_name)
-        with open(os.path.join(target, 'index.html'), 'w') as f:
-            f.write(t.html())
-
         d = pq(filename='docs/index.html')
         d('#dir').append(f'<a href="{dir_name}">{dir_name}</a>')
-        
+
         with open('docs/index.html', 'w') as f:
             f.write(d.html())
+
+    t = pq(filename='docs/template.html')
+    t('title').text(f'LeetCode | {dir_name}')
+    t('h1').text(dir_name)
+    with open(os.path.join(target, 'index.html'), 'w') as f:
+        f.write(t.html())
 
     dom = pq(filename=os.path.join(target, 'index.html'))
     root = dom('#root')
@@ -42,8 +41,9 @@ if __name__ == "__main__":
         with open(fname) as pfile:
             s = pfile.read()
         data, code = process_text(s)
+        num_code = os.path.splitext(os.path.basename(fname))[0]
         root.append(f'''
-            <div>
+            <div class="problem" id="problem-{num_code}">
                     <h3>{data['Title']}</h3>
                     <a href="{data['Source']}">link to leetcode</a>
                     <p>Comment: {data['Comment']}</p>
