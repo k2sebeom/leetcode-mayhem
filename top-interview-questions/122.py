@@ -2,7 +2,7 @@
 
 Title: Best Time to Buy and Sell Stock II
 Source: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
-Comment: Think of greedy algorithm: Think of myopic decision making at see if it works for global setting
+Comment: Think of greedy algorithm; Think of myopic decision making at see if it works for global setting
 
 '''
 

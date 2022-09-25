@@ -169,6 +169,53 @@ class Solution:
                 </div>
         
             <div>
+                    <h3>Sort Colors</h3>
+                    <a href="https://leetcode.com/problems/sort-colors/">link to leetcode</a>
+                    <p>Comment: Check how many items are sorted at each iteration.</p>
+                    <pre><code>'''
+
+class Solution:
+    def sortColors(self, nums: List[int]) -&gt; None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        r, w, b = 0, 0, len(nums) - 1
+        
+        while w &lt;= b:
+            if nums[w] == 0:
+                nums[r], nums[w] = nums[w], nums[r]
+                w += 1
+                r += 1
+            elif nums[w] == 1:
+                w += 1
+            else:
+                nums[w], nums[b] = nums[b], nums[w]
+                b -= 1</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Longest Consecutive Sequence</h3>
+                    <a href="https://leetcode.com/problems/longest-consecutive-sequence/">link to leetcode</a>
+                    <p>Comment: Even though there exists a nested loop, we only think of incidents that we count. Think of how human would do.</p>
+                    <pre><code>'''
+
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -&gt; int:
+        seen = set(nums)
+        longest = 0
+        for n in nums:
+            if n - 1 not in seen:
+                i = n + 1
+                j = 1
+                while i in seen:
+                    i += 1
+                    j += 1
+                longest = max(longest, j)
+
+        return longest</code></pre>
+                </div>
+        
+            <div>
                     <h3>Jump Game</h3>
                     <a href="https://leetcode.com/problems/jump-game/">link to leetcode</a>
                     <p>Comment: Define dynamic programming table thoughtfully</p>
@@ -260,6 +307,33 @@ class Solution:
                 </div>
         
             <div>
+                    <h3>Binary Tree Zigzag Level Order Traversal</h3>
+                    <a href="https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/">link to leetcode</a>
+                    <p>Comment: Just the same as 102, but with zigzag indicator</p>
+                    <pre><code>'''
+
+class Solution:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -&gt; List[List[int]]:
+        if not root:
+            return []   
+        result, level = [], [root]
+        add = result.append
+        counter = 1
+        while level:
+            add(list(map(lambda n: n.val, level[::counter])))
+            counter *= -1
+            next_level = []
+            log = next_level.append
+            for node in level:
+                if node.left:
+                    log(node.left)
+                if node.right:
+                    log(node.right)
+            level = next_level
+        return result</code></pre>
+                </div>
+        
+            <div>
                     <h3>Add Two Numbers</h3>
                     <a href="https://leetcode.com/problems/add-two-numbers/">link to leetcode</a>
                     <p>Comment: None</p>
@@ -324,6 +398,39 @@ class Solution:
                 </div>
         
             <div>
+                    <h3>Best Time to Buy and Sell Stock II</h3>
+                    <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">link to leetcode</a>
+                    <p>Comment: Think of greedy algorithm; Think of myopic decision making at see if it works for global setting</p>
+                    <pre><code>'''
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -&gt; int:
+        # Greedy
+        bought = -1
+        profit = 0
+        
+        for i in range(len(prices) - 1):
+            if bought &lt; 0 and prices[i + 1] &gt; prices[i]: # If you have not bought yet and price increases
+                bought = prices[i] # Buy now
+            elif bought &gt;= 0 and prices[i + 1] &lt; prices[i]: # bought and price decreases
+                profit += prices[i] - bought
+                bought = -1
+        if bought &gt;= 0 and prices[-1] &gt; bought:
+            profit += prices[-1] - bought
+        return profit
+            
+            </code></pre>
+                </div>
+        
+            <div>
+                    <h3>Populating Next Right Pointers in Each Node</h3>
+                    <a href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node/">link to leetcode</a>
+                    <p>Comment: None</p>
+                    <pre><code>'''
+</code></pre>
+                </div>
+        
+            <div>
                     <h3>Reverse Integer</h3>
                     <a href="https://leetcode.com/problems/reverse-integer/">link to leetcode</a>
                     <p>Comment: None</p>
@@ -345,6 +452,108 @@ class Solution:
 
         return 0 if result &gt; pow(2, 31) else result * symbol
     </code></pre>
+                </div>
+        
+            <div>
+                    <h3>Validate Binary Search Tree</h3>
+                    <a href="https://leetcode.com/problems/validate-binary-search-tree/">link to leetcode</a>
+                    <p>Comment: Think of standard tree traversal (inorder, preorder, postorder)</p>
+                    <pre><code>'''
+
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -&gt; bool:
+        stack = []
+        
+        def inorder(root: TreeNode, add):
+            if root.left:
+                inorder(root.left, add)
+            add(root.val)
+            if root.right:
+                inorder(root.right, add)
+
+        inorder(root, stack.append)
+
+        for i in range(1, len(stack)):
+            if stack[i - 1] &gt;= stack[i]:
+                return False
+        return True
+</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Binary Tree Level Order Traversal</h3>
+                    <a href="https://leetcode.com/problems/binary-tree-level-order-traversal/">link to leetcode</a>
+                    <p>Comment: Use the traversal, but simplify if you can</p>
+                    <pre><code>'''
+
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -&gt; List[List[int]]:
+        result, level = [], [root]
+        if not root:
+            return []
+        add = result.append
+        while level:
+            add(list(map(lambda n: n.val, level)))
+
+            next_level = []
+            log = next_level.append
+            for node in level:
+                if node.left:
+                    log(node.left)
+                if node.right:
+                    log(node.right)
+            level = next_level
+        return result</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Construct Binary Tree from Preorder and Inorder Traversal</h3>
+                    <a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">link to leetcode</a>
+                    <p>Comment: Distinguish inorder and preorder</p>
+                    <pre><code>'''
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -&gt; Optional[TreeNode]:
+        if len(preorder) == 0 or len(inorder) == 0:
+            return None
+
+        root = preorder[0]
+        idx = inorder.index(root)
+        
+        left_in, right_in = inorder[:idx], inorder[idx + 1:]
+        
+        idx = len(left_in)
+        
+        left_pre, right_pre = preorder[1: idx + 1], preorder[idx + 1:]
+        
+        left_tree = self.buildTree(left_pre, left_in)
+        right_tree = self.buildTree(right_pre, right_in)
+        
+        return TreeNode(root, left_tree, right_tree)
+</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Palindrome Partitioning</h3>
+                    <a href="https://leetcode.com/problems/palindrome-partitioning/">link to leetcode</a>
+                    <p>Comment: O(n^2) is still good considering the worst case is all the partitions</p>
+                    <pre><code>'''
+
+class Solution:
+    def partition(self, s: str) -&gt; List[List[str]]:
+        dp = [[] for _ in s]
+        dp[0] = [[s[0]]]
+        for i in range(1, len(dp)):
+            singleton = list(map(lambda x: x + [s[i]], dp[i - 1]))
+            dp[i] = singleton
+            if s[0:i+1] == s[0:i+1][::-1]:
+                dp[i].append([s[:i + 1]])
+            for j in range(1, i):
+                if s[j:i+1] == s[j:i+1][::-1]:
+                    dp[i] += list(map(lambda x: x + [s[j:i+1]], dp[j - 1]))
+
+        return dp[-1]
+</code></pre>
                 </div>
         
             <div>
@@ -380,6 +589,21 @@ class Solution:
             slow = slow.next
         slow.next = slow.next.next
         return head</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Subsets</h3>
+                    <a href="https://leetcode.com/problems/subsets/">link to leetcode</a>
+                    <p>Comment: To return all subsets, it is O(2^n) anyways. Simple recursion may work.</p>
+                    <pre><code>'''
+
+class Solution:
+    def subsets(self, nums: List[int]) -&gt; List[List[int]]:
+        if not nums:
+            return [[]]
+    
+        without = self.subsets(nums[1:])
+        return without + [[nums[0]] + s for s in without]</code></pre>
                 </div>
         
             <div>
@@ -463,6 +687,61 @@ class Solution:
                 </div>
         
             <div>
+                    <h3>Gas Station</h3>
+                    <a href="https://leetcode.com/problems/gas-station/">link to leetcode</a>
+                    <p>Comment: Greedy algorithm. When there exists only one solution, thinking of optimization as greedy algorithm.</p>
+                    <pre><code>'''
+
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -&gt; int:
+        trip_tank, curr_tank, start, n = 0, 0, 0, len(gas)
+        for i in range(n):
+            trip_tank += gas[i] - cost[i]
+            curr_tank += gas[i] - cost[i]
+            if curr_tank &lt; 0:
+                start = i + 1
+                curr_tank = 0 
+        return start if trip_tank &gt;= 0 else -1</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Word Search</h3>
+                    <a href="https://leetcode.com/problems/word-search/">link to leetcode</a>
+                    <p>Comment: Backtracking or DFS</p>
+                    <pre><code>'''
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -&gt; bool:
+        def helper(board: List[List[str]], word: str, row: int, col: int) -&gt; bool:
+            if board[row][col] != word[0]:
+                return False
+
+            if len(word) == 1:
+                return True
+            
+            result = False
+            temp = board[row][col]
+            board[row][col] = '0'
+            if row - 1 &gt;= 0:
+                result = result or helper(board, word[1:], row - 1, col)
+            if col + 1 &lt; len(board[0]):
+                result = result or helper(board, word[1:], row, col + 1)
+            if row + 1 &lt; len(board):
+                result = result or helper(board, word[1:], row + 1, col)
+            if col - 1 &gt;= 0:
+                result = result or helper(board, word[1:], row, col - 1)
+            board[row][col] = temp
+            return result
+
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if helper(board, word, i, j):
+                    return True
+        return False
+</code></pre>
+                </div>
+        
+            <div>
                     <h3>Find the Index of the First Occurrence in a String</h3>
                     <a href="https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/">link to leetcode</a>
                     <p>Comment: This is difficult?</p>
@@ -498,6 +777,44 @@ class Solution:
                 return [i, indices[remaining]]
         return [-1, -1]
 </code></pre>
+                </div>
+        
+            <div>
+                    <h3>Surrounded Regions</h3>
+                    <a href="https://leetcode.com/problems/surrounded-regions/">link to leetcode</a>
+                    <p>Comment: Why does it work....?</p>
+                    <pre><code>'''
+
+class Solution:
+    def solve(self, board: List[List[str]]) -&gt; None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        marks = [[0] * len(board[0]) for _ in range(len(board))]
+
+        def mark(i, j):
+            marks[i][j] = -1
+            if board[i][j] != 'O':
+                return
+            if j + 1 &lt; len(board[0]) and marks[i][j+1]  &gt;= 0 and board[i][j + 1] == 'O':
+                mark(i, j + 1)
+            if j - 1 &gt; 0 and marks[i][j-1]  &gt;= 0 and board[i][j - 1] == 'O':
+                mark(i, j - 1)
+            if i + 1 &lt; len(board) and marks[i+1][j]  &gt;= 0 and board[i + 1][j] == 'O':
+                mark(i + 1, j)
+            if i - 1 &gt; 0 and marks[i - 1][j]  &gt;= 0 and board[i - 1][j] == 'O':
+                mark(i - 1, j)
+        
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if i == 0 or i == len(board) - 1 or j == 0 or j == len(board[0]) - 1:
+                    mark(i, j)
+
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if marks[i][j] &gt;= 0:
+                    board[i][j] = 'X'
+        return board</code></pre>
                 </div>
         
             <div>
@@ -570,6 +887,39 @@ class Solution:
             for j in range(n - 2, -1, -1):
                 dp[i][j] = dp[i + 1][j] + dp[i][j + 1]
         return dp[0][0]</code></pre>
+                </div>
+        
+            <div>
+                    <h3>Decode Ways</h3>
+                    <a href="https://leetcode.com/problems/decode-ways/">link to leetcode</a>
+                    <p>Comment: Dynamic Programming works</p>
+                    <pre><code>'''
+
+class Solution:
+    def numDecodings(self, s: str) -&gt; int:
+        if len(s) == 1:
+            return 0 if s == '0' else 1
+        
+        dp = [0] * len(s)
+        
+        dp[-1] = 0 if s[-1] == '0' else 1
+        
+        if s[-2] == '0':
+            dp[-2] = 0
+        elif int(s[-2:]) &lt;= 26:
+            dp[-2] = 1 + dp[-1]
+        else:
+            dp[-2] = dp[-1]
+
+        for i in range(len(s) - 3, -1, -1):
+            result = 0
+            if s[i] != '0':
+                result += dp[i + 1]
+            if s[i] != "0" and int(s[i:i+2]) &lt;= 26:
+                result += dp[i + 2]
+            dp[i] = result
+        return dp[0]
+                </code></pre>
                 </div>
         
             <div>
