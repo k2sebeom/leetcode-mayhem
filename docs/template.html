@@ -14,23 +14,39 @@
                 background-color: #ddd;
                 padding: 15px;
             }
+
             #top-btn {
-                position: fixed;
-                right: 40px;
-                bottom: 40px;
                 width: 50px;
                 height: 50px;
                 background-color: yellowgreen;
+                margin-left: 10px;
+            }
+
+            #random-btn {
+                width: 100px;
+                height: 50px;
+                background-color: plum;
+            }
+
+            #button-group {
+                position: fixed;
+                right: 40px;
+                bottom: 40px;
+                display: flex;
+                align-items: center;
             }
         </style>
     </head>
     <body>
         <h1 id="title">Name of the Set</h1>
-        <button id="random-btn">Give me Random</button>
+        
         <div id="root">
         </div>
-
-        <button id="top-btn">Top</button>
+        <div id="button-group">
+            <button id="random-btn">Next Random</button>
+            <button id="top-btn">Top</button>
+        </div>
+        
 
         <script>
             const tbtn = document.querySelector('#top-btn');
