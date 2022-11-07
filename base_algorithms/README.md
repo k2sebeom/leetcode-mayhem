@@ -7,6 +7,9 @@
 - Merge Sort: $O(n\log(n))$
 - Heap Sort: $O(n\log(n))$
 
+## Trees
+- BST search: $O(\log(n))$
+
 ## Heap
 - heap push, heap pop: $O(\log(n))$
 - heapify: $O(n)$
