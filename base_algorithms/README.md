@@ -7,6 +7,9 @@
 - Merge Sort: $O(n\log(n))$
 - Heap Sort: $O(n\log(n))$
 
+## Searching
+- Binary Search: $O(\log(n))$
+
 ## Trees
 - BST search: $O(\log(n))$
 
