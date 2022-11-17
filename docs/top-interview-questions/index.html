@@ -271,6 +271,15 @@
         return [-1,-1]</code></pre>
                 </div>
         
+            <div class="problem" id="problem-454">
+                    <h3>4Sum II</h3>
+                    <a href="https://leetcode.com/problems/4sum-ii/">link to leetcode</a>
+                    <p>Comment: TODO</p>
+                    <pre><code>class Solution:
+    def fourSumCount(self, nums1: List[int], nums2: List[int], nums3: List[int], nums4: List[int]) -&gt; int:
+        pass</code></pre>
+                </div>
+        
             <div class="problem" id="problem-75">
                     <h3>Sort Colors</h3>
                     <a href="https://leetcode.com/problems/sort-colors/">link to leetcode</a>
@@ -394,6 +403,39 @@ class Solution:
             else:
                 break
         return prefix</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-289">
+                    <h3>Game of Life</h3>
+                    <a href="https://leetcode.com/problems/game-of-life/">link to leetcode</a>
+                    <p>Comment: This is CS150 level of problem</p>
+                    <pre><code>class Solution:
+    def gameOfLife(self, board: List[List[int]]) -&gt; None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        def count_neighbors(i, j):
+            count = 0
+            for x in (-1, 0, 1):
+                for y in (-1, 0, 1):
+                    if x == 0 and y == 0:
+                        continue
+                    if i + x &gt;= 0 and i + x &lt; len(board) and j + y &gt;= 0 and j + y &lt; len(board[0]):
+                        count += board[i + x][j + y]
+                    
+            return count
+        next_board = [[d for d in row] for row in board]
+        for i in range(len(board)):
+            for j in range(len(board[i])):
+                count = count_neighbors(i, j)
+                if count &lt; 2 or count &gt; 3:
+                    next_board[i][j] = 0
+                if count == 3:
+                    next_board[i][j] = 1
+        for i in range(len(board)):
+            for j in range(len(board[i])):
+                board[i][j] = next_board[i][j]
+                    </code></pre>
                 </div>
         
             <div class="problem" id="problem-6">
@@ -520,6 +562,23 @@ class Solution:
             prev_max = curr_max
             prev_min = curr_min
         return global_max</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-230">
+                    <h3>Kth Smallest Element in a BST</h3>
+                    <a href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/">link to leetcode</a>
+                    <p>Comment: Inorder traversal of BST is a sorted list</p>
+                    <pre><code>class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -&gt; int:
+        def inorder(node):
+            result = []
+            if node.left:
+                result = inorder(node.left) + result
+            result.append(node.val)
+            if node.right:
+                result = result + inorder(node.right)
+            return result
+        return inorder(root)[k - 1]</code></pre>
                 </div>
         
             <div class="problem" id="problem-2">
@@ -737,6 +796,71 @@ class LRUCache:
 </code></pre>
                 </div>
         
+            <div class="problem" id="problem-324">
+                    <h3>Wiggle Sort II</h3>
+                    <a href="https://leetcode.com/problems/wiggle-sort-ii/">link to leetcode</a>
+                    <p>Comment: Think of the nature of the problem</p>
+                    <pre><code>class Solution:
+    def wiggleSort(self, nums: List[int]) -&gt; None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        nums.sort()
+        half = len(nums[::2])
+        nums[::2], nums[1::2] = nums[:half][::-1], nums[half:][::-1]</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-341">
+                    <h3>Flatten Nested List Iterator</h3>
+                    <a href="https://leetcode.com/problems/flatten-nested-list-iterator/">link to leetcode</a>
+                    <p>Comment: TODO</p>
+                    <pre><code>class NestedIterator:
+    def __init__(self, nestedList: [NestedInteger]):
+        pass
+    
+    def next(self) -&gt; int:
+        pass
+    
+    def hasNext(self) -&gt; bool:
+        pass</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-300">
+                    <h3>Longest Increasing Subsequence</h3>
+                    <a href="https://leetcode.com/problems/longest-increasing-subsequence/">link to leetcode</a>
+                    <p>Comment: Take a look into bisect module</p>
+                    <pre><code>import bisect
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -&gt; int:
+        tails = []
+        for n in nums:
+            idx = bisect.bisect_left(tails, n)
+            tails[idx:idx+1] = [n]
+        return len(tails)
+</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-240">
+                    <h3>Search a 2D Matrix II</h3>
+                    <a href="https://leetcode.com/problems/search-a-2d-matrix-ii/">link to leetcode</a>
+                    <p>Comment: Start from top right and moves down searching. Start with intuition but think logically.</p>
+                    <pre><code>class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -&gt; bool:
+        rows, cols = len(matrix), len(matrix[0])
+        row, col = 0, cols - 1
+
+        while row &lt; rows and col &gt;= 0:
+            val = matrix[row][col]
+            if val &gt; target:
+                col -= 1
+            elif val &lt; target:
+                row += 1
+            else:
+                return True
+        return False</code></pre>
+                </div>
+        
             <div class="problem" id="problem-122">
                     <h3>Best Time to Buy and Sell Stock II</h3>
                     <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">link to leetcode</a>
@@ -758,6 +882,24 @@ class LRUCache:
         return profit
             
             </code></pre>
+                </div>
+        
+            <div class="problem" id="problem-334">
+                    <h3>Increasing Triplet Subsequence</h3>
+                    <a href="https://leetcode.com/problems/increasing-triplet-subsequence/">link to leetcode</a>
+                    <p>Comment: We can say it is a greedy algorithm</p>
+                    <pre><code>class Solution:
+    def increasingTriplet(self, nums: List[int]) -&gt; bool:
+        first = second = float('inf')
+        for n in nums:
+            if n &lt;= first:
+                first = n
+            elif n &lt;= second:
+                second = n
+            else:
+                return True
+        return False
+</code></pre>
                 </div>
         
             <div class="problem" id="problem-116">
@@ -786,6 +928,24 @@ class LRUCache:
                 else:
                     level[i].next = None
         return root</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-287">
+                    <h3>Find the Duplicate Number</h3>
+                    <a href="https://leetcode.com/problems/find-the-duplicate-number/">link to leetcode</a>
+                    <p>Comment: Use the constraint that nums are in [1, n]</p>
+                    <pre><code>class Solution:
+    def findDuplicate(self, nums: List[int]) -&gt; int:
+        idx = 0
+        curr = nums[0]
+        nums[0] = 0
+        for _ in range(len(nums)):
+            if nums[curr] == 0:
+                return curr
+            nums[curr], curr = 0, nums[curr]
+
+            
+        </code></pre>
                 </div>
         
             <div class="problem" id="problem-7">
@@ -858,6 +1018,56 @@ class LRUCache:
         return result</code></pre>
                 </div>
         
+            <div class="problem" id="problem-371">
+                    <h3>Sum of Two Integers</h3>
+                    <a href="https://leetcode.com/problems/sum-of-two-integers/">link to leetcode</a>
+                    <p>Comment: Computer Architecture is oddly helpful</p>
+                    <pre><code>class Solution:
+    def twos_complement(self, b):
+        s = ''
+        for c in b:
+            s += '0' if c == '1' else '1'
+        s = self.add(s, '0' * 11 + '1', bound=True)
+        return s
+
+    def add(self, ba: str, bb: str, bound=False) -&gt; str:
+        result = ''
+        carry = 0
+        for (ia, ib) in zip(ba[::-1], bb[::-1]):
+            ca, cb = int(ia), int(ib)
+            temp = ca &amp; cb
+            s = ca ^ cb
+            temp_carry = temp | (s &amp; carry)
+            s = s ^ carry
+            carry = temp_carry
+            result = f'{s}{result}'
+        if carry &gt; 0 and bound:
+            result = '1' + result
+        return result
+    
+    def getSum(self, a: int, b: int) -&gt; int:
+        s = ''
+        ba = bin(abs(a))[2:]
+        bb = bin(abs(b))[2:]
+        ba = '0' + '0' * (11 - len(ba)) + ba
+        bb = '0' + '0' * (11 - len(bb)) + bb
+        if b &lt; 0:
+            bb = self.twos_complement(bb)
+        if a &lt; 0:
+            ba = self.twos_complement(ba)
+
+        result = self.add(ba, bb)
+
+        is_neg = result[0] == '1'
+        if is_neg:
+            result = self.twos_complement(result)
+
+        return int(result, 2) * (-1 if is_neg else 1)
+            
+            
+            </code></pre>
+                </div>
+        
             <div class="problem" id="problem-215">
                     <h3>Kth Largest Element in an Array</h3>
                     <a href="https://leetcode.com/problems/kth-largest-element-in-an-array/">link to leetcode</a>
@@ -867,6 +1077,23 @@ class LRUCache:
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -&gt; int:
         return nlargest(k, nums)[-1]</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-236">
+                    <h3>Lowest Common Ancestor of a Binary Tree</h3>
+                    <a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/">link to leetcode</a>
+                    <p>Comment: Basically a search in tree, if node appears in both child tress, than the node is potential LCA</p>
+                    <pre><code>class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -&gt; 'TreeNode':
+        if root is None:
+            return None
+
+        if root.val in (p.val, q.val):
+            return root
+        
+        left, right = self.lowestCommonAncestor(root.left, p, q), self.lowestCommonAncestor(root.right, p, q)
+        
+        return root if left and right else left or right</code></pre>
                 </div>
         
             <div class="problem" id="problem-105">
@@ -912,6 +1139,16 @@ class Solution:
                     dp[i] += list(map(lambda x: x + [s[j:i+1]], dp[j - 1]))
 
         return dp[-1]
+</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-395">
+                    <h3>Longest Substring with At Least K Repeating Characters</h3>
+                    <a href="https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/">link to leetcode</a>
+                    <p>Comment: TODO</p>
+                    <pre><code>class Solution:    
+    def longestSubstring(self, s: str, k: int) -&gt; int:
+        pass
 </code></pre>
                 </div>
         
@@ -1091,6 +1328,23 @@ class Solution:
         return len(result) == numCourses</code></pre>
                 </div>
         
+            <div class="problem" id="problem-347">
+                    <h3>Top K Frequent Elements</h3>
+                    <a href="https://leetcode.com/problems/top-k-frequent-elements/">link to leetcode</a>
+                    <p>Comment: Easy</p>
+                    <pre><code>class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -&gt; List[int]:
+        seen = dict()
+        for n in nums:
+            if n in seen:
+                seen[n] += 1
+            else:
+                seen[n] = 1
+        L = [(k, seen[k]) for k in seen]
+        L.sort(key=lambda d: d[1])
+        return [d[0] for d in L[-k:]]</code></pre>
+                </div>
+        
             <div class="problem" id="problem-134">
                     <h3>Gas Station</h3>
                     <a href="https://leetcode.com/problems/gas-station/">link to leetcode</a>
@@ -1105,6 +1359,53 @@ class Solution:
                 start = i + 1
                 curr_tank = 0 
         return start if trip_tank &gt;= 0 else -1</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-322">
+                    <h3>Coin Change</h3>
+                    <a href="https://leetcode.com/problems/coin-change/">link to leetcode</a>
+                    <p>Comment: Think of DP solution. Backtracking is rarely an optimized solution</p>
+                    <pre><code>class Solution:
+    def coinChange(self, coins: List[int], amount: int) -&gt; int:
+        dp = [-1] * (amount + 1)
+        dp[0] = 0
+        for a in range(1, amount + 1):
+            min_amount = amount + 10
+            for c in coins:
+                if a - c &gt;= 0 and dp[a-c] &gt;= 0:
+                    min_amount = min(dp[a - c] + 1, min_amount)
+            dp[a] = min_amount if min_amount &lt;= amount else -1
+        return dp[-1]</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-380">
+                    <h3>Insert Delete GetRandom O(1)</h3>
+                    <a href="https://leetcode.com/problems/insert-delete-getrandom-o1/">link to leetcode</a>
+                    <p>Comment: Just used python set</p>
+                    <pre><code>class RandomizedSet:
+
+    def __init__(self):
+        self.data = set()
+
+    def insert(self, val: int) -&gt; bool:
+        if val in self.data:
+            return False
+        else:
+            self.data.add(val)
+            return True
+
+    def remove(self, val: int) -&gt; bool:
+        if val in self.data:
+            self.data.remove(val)
+            return True
+        else:
+            return False
+
+    def getRandom(self) -&gt; int:
+        L = list(self.data)
+        return L[int(random.random() * len(L))]
+
+</code></pre>
                 </div>
         
             <div class="problem" id="problem-79">
@@ -1176,6 +1477,47 @@ class Solution:
 </code></pre>
                 </div>
         
+            <div class="problem" id="problem-237">
+                    <h3>Delete Node in a Linked List</h3>
+                    <a href="https://leetcode.com/problems/delete-node-in-a-linked-list/">link to leetcode</a>
+                    <p>Comment: Is this medium level?</p>
+                    <pre><code>class Solution:
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        slow, fast = node, node.next
+        while fast is not None:
+            slow.val = fast.val # Shifting values of nodes to left
+            if fast.next is None:
+                slow.next = None
+            slow, fast = slow.next, fast.next</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-384">
+                    <h3>Shuffle an Array</h3>
+                    <a href="https://leetcode.com/problems/shuffle-an-array/">link to leetcode</a>
+                    <p>Comment: E-Z</p>
+                    <pre><code>class Solution:
+
+    def __init__(self, nums: List[int]):
+        self.original = nums.copy()
+        self.data = nums
+
+    def reset(self) -&gt; List[int]:
+        return self.original
+
+    def shuffle(self) -&gt; List[int]:
+        L = self.original.copy()
+        self.data.clear()
+        for _ in range(len(self.original)):
+            idx = int(random.random() * len(L))
+            self.data.append(L.pop(idx))
+        return self.data
+</code></pre>
+                </div>
+        
             <div class="problem" id="problem-155">
                     <h3>Min Stack</h3>
                     <a href="https://leetcode.com/problems/min-stack/">link to leetcode</a>
@@ -1237,6 +1579,38 @@ class Solution:
         return board</code></pre>
                 </div>
         
+            <div class="problem" id="problem-227">
+                    <h3>Basic Calculator II</h3>
+                    <a href="https://leetcode.com/problems/basic-calculator-ii/">link to leetcode</a>
+                    <p>Comment: Use stack, and keep track of the last seen operation</p>
+                    <pre><code>class Solution:
+    def calculate(self, s: str) -&gt; int:
+        if not s:
+            return "0"
+        stack, num, op = [], 0, "+"
+        for i in range(len(s)):
+            if s[i] not in '+-*/ ':
+                num = num * 10 + int(s[i])
+
+            if s[i] in '+-*/' or i == len(s)-1:
+                if op == "-":
+                    stack.append(-num)
+                elif op == "+":
+                    stack.append(num)
+                elif op == "*":
+                    stack.append(stack.pop() * num)
+                else:
+                    if stack[-1] &lt; 0:
+                        stack.append(-((-stack.pop()) // num))
+                    else:
+                        stack.append(stack.pop() // num)
+                op = s[i]
+                num = 0
+            # print(stack)
+
+        return sum(stack)</code></pre>
+                </div>
+        
             <div class="problem" id="problem-208">
                     <h3>Implement Trie (Prefix Tree)</h3>
                     <a href="https://leetcode.com/problems/implement-trie-prefix-tree/">link to leetcode</a>
@@ -1283,6 +1657,39 @@ class Solution:
         idx = -k % len(nums)
         left, right = nums[idx:], nums[:idx]
         nums[:] = left + right</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-378">
+                    <h3>Kth Smallest Element in a Sorted Matrix</h3>
+                    <a href="https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/">link to leetcode</a>
+                    <p>Comment: This is fake</p>
+                    <pre><code>class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -&gt; int:
+        L = []
+        add = L.append
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                add(matrix[i][j])
+        L.sort()
+        return L[k - 1]</code></pre>
+                </div>
+        
+            <div class="problem" id="problem-238">
+                    <h3>Product of Array Except Self</h3>
+                    <a href="https://leetcode.com/problems/product-of-array-except-self/">link to leetcode</a>
+                    <p>Comment: Different direction</p>
+                    <pre><code>class Solution:
+    def productExceptSelf(self, nums: List[int]) -&gt; List[int]:
+        result = []
+        acc = 1
+        for n in nums:
+            result.append(acc)
+            acc *= n
+        acc = 1
+        for i, n in enumerate(nums[::-1]):
+            result[~i] *= acc
+            acc *= n
+        return result</code></pre>
                 </div>
         
             <div class="problem" id="problem-56">
@@ -1447,6 +1854,56 @@ class Solution:
         self.MEMO[str(nums)] = result
         return result
             </code></pre>
+                </div>
+        
+            <div class="problem" id="problem-279">
+                    <h3>Perfect Squares</h3>
+                    <a href="https://leetcode.com/problems/perfect-squares/">link to leetcode</a>
+                    <p>Comment: This is slow but DP works</p>
+                    <pre><code>from math import sqrt
+
+class Solution:
+    def numSquares(self, n: int) -&gt; int:
+        dp = [0, 1, 2, 3, 1, 2]
+        add = dp.append
+        
+        if n &lt; len(dp):
+            return dp[n]
+        
+        for i in range(6, n + 1): 
+            if int(sqrt(i))**2 == i:
+                add(1)
+                continue
+            best = i
+            for j in range(1, int(sqrt(i)) + 1):
+                best = min(best, dp[i - j**2] + 1)
+            add(best)
+        return dp[-1]
+        
+        </code></pre>
+                </div>
+        
+            <div class="problem" id="problem-328">
+                    <h3>Odd Even Linked List</h3>
+                    <a href="https://leetcode.com/problems/odd-even-linked-list/">link to leetcode</a>
+                    <p>Comment: This is a crappy solution, but basically it uses two pointers.</p>
+                    <pre><code>class Solution:
+    def oddEvenList(self, head: Optional[ListNode]) -&gt; Optional[ListNode]:
+        if not head:
+            return head
+        tail = head.next
+        if not tail:
+            return head
+        slow, fast = head, head.next
+        while fast.next:
+            slow.next, fast.next = fast.next, fast.next.next
+            fast = fast.next
+            if slow.next:
+                slow = slow.next
+            if not fast:
+                break
+        slow.next = tail
+        return head</code></pre>
                 </div>
         
             <div class="problem" id="problem-73">
