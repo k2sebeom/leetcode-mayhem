@@ -21,5 +21,5 @@
 - Topological Sorting: $O(V+ E)$
 - DFS / BFS: $O(V+ E)$
 - Dijkstra's algorithm (Shortest Path): $O(E+ V\log(V))$
-- Prim's algorithm (MST): $O(V^2)$
-
+- Prim's algorithm (MST): $O(E + V\log(V))$
+- Kruskal's Algorithm (MST): $O(E\log(E))$ or  $O(V\log(V))$ 
