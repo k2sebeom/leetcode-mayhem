@@ -1,0 +1,90 @@
+<head>
+        <title>LeetCode | top-100-liked-questions</title>
+        <style>
+            .problem {
+                border: 1px solid black;
+                border-radius: 10px;
+                margin-top: 10px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            pre {
+                background-color: #ddd;
+                padding: 15px;
+            }
+
+            #top-btn {
+                width: 50px;
+                height: 50px;
+                background-color: yellowgreen;
+                margin-left: 10px;
+            }
+
+            #random-btn {
+                width: 100px;
+                height: 50px;
+                background-color: plum;
+            }
+
+            #button-group {
+                position: fixed;
+                right: 40px;
+                bottom: 40px;
+                display: flex;
+                align-items: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="title">top-100-liked-questions</h1>
+        
+        <div id="root">
+            <div class="problem" id="problem-24">
+                    <h3>Swap Nodes in Pairs</h3>
+                    <a href="https://leetcode.com/problems/swap-nodes-in-pairs/">link to leetcode</a>
+                    <p>Comment: Node traversal</p>
+                    <pre><code>class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -&gt; Optional[ListNode]:
+        # O(n) O(1)
+        fast, slow = head, None
+        if head is None:
+            return None
+
+        if head.next is not None:
+            head = head.next
+
+        while fast is not None and fast.next is not None:
+            node = fast.next
+            node.next, fast.next = fast, node.next
+            if slow is not None:
+                slow.next = node
+            fast, slow = fast.next, fast
+        return head
+        </code></pre>
+                </div>
+        </div>
+        <div id="button-group">
+            <button id="random-btn">Next Random</button>
+            <button id="top-btn">Top</button>
+        </div>
+        
+
+        <script>
+            const tbtn = document.querySelector('#top-btn');
+            const rbtn = document.querySelector('#random-btn');
+            const root = document.querySelector('#root');
+            const count = root.childElementCount;
+
+            const title = document.querySelector('#title');
+            title.innerText += ` (${count} problems solved)`;
+
+            rbtn.onclick = function () {
+                const idx = Math.floor(Math.random() * count);
+                location.href = '#' + root.children[idx].id
+            };
+
+            tbtn.onclick = function () {
+                location.href = '';
+            }
+        </script>
+    </body>
