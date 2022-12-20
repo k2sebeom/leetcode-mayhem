@@ -1,4 +1,16 @@
 
+'''
+Backtracking often comes with
+def backtrack(arg, result, sofar):
+    if problem is complete:
+        result.append(sofar)
+        return
+    
+    if beginning: (or sofar == empty)
+        go thru all the possible starts
+    else:
+        search
+'''
 
 
 def backtrack(L, result, sofar):
