@@ -2037,6 +2037,39 @@ class Solution:
         return max(dp)</code></pre>
             </div>
     
+        <div class="problem" id="problem-31">
+                <h3>Next Permutation</h3>
+                <a href="https://leetcode.com/problems/next-permutation/">link to leetcode</a>
+                <p>Comment: Think of few examples and find the pattern.</p>
+                <pre><code>class Solution:
+    def nextPermutation(self, nums: List[int]) -&gt; None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        prev = nums[-1]
+        idx = -1
+        for i in range(len(nums) - 2, -1, -1):
+            if nums[i] &lt; prev:
+                idx = i
+                break
+            prev = nums[i]
+        if idx &lt; 0:
+            nums.sort()
+            return
+        
+        min_idx = idx + 1
+        for i in range(idx + 1, len(nums)):
+            if nums[i] &gt; nums[idx] and nums[min_idx] &gt; nums[i]:
+                min_idx = i
+
+        nums[idx], nums[min_idx] = nums[min_idx], nums[idx]
+        trailing = nums[idx+1:]
+        trailing.sort()
+        for i in range(len(trailing)):
+            nums[idx + 1 + i] = trailing[i]
+</code></pre>
+            </div>
+    
         <div class="problem" id="problem-24">
                 <h3>Swap Nodes in Pairs</h3>
                 <a href="https://leetcode.com/problems/swap-nodes-in-pairs/">link to leetcode</a>
@@ -2059,6 +2092,36 @@ class Solution:
             fast, slow = fast.next, fast
         return head
         </code></pre>
+            </div>
+    
+        <div class="problem" id="problem-39">
+                <h3>Combination Sum</h3>
+                <a href="https://leetcode.com/problems/combination-sum/">link to leetcode</a>
+                <p>Comment: Dynamic programming, but there still exists room for optimization</p>
+                <pre><code>class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -&gt; List[List[int]]:
+        dp = [[] for _ in range(target)]
+        # if ith all the combinations that can make i + 1
+        # ith
+        # 2 + dp[i - 2]
+        # 3 + dp[i - 3]
+        
+        for c in candidates:
+            if c - 1 &lt; target:
+                dp[c - 1].append([c])
+        
+        for i in range(target):
+            for c in candidates:
+                if i - c &gt;= 0:
+                    for comb in dp[i - c]:
+                        dp[i].append(comb + [c])
+        # print(dp)
+        for i in range(len(dp[-1])):
+            dp[-1][i].sort()
+            dp[-1][i] = tuple(dp[-1][i])
+        dp[-1] = list(set(dp[-1]))
+        return dp[-1]
+</code></pre>
             </div>
     </div>
         <div id="button-group">
