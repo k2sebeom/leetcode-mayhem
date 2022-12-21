@@ -51,5 +51,5 @@ if __name__ == "__main__":
                 </div>
         ''')
 
-    with open(os.path.join(target, 'index.html'), 'w') as f:
-        f.write(dom.html())
+    with open(os.path.join(target, 'index.html'), 'w', encoding='utf8') as f:
+        f.write(dom.html(method='html'))
