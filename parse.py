@@ -13,43 +13,53 @@ def process_text(raw_text: str):
     return data, code
 
 
+def parse_problem(root, fname: str) -> str:
+    with open(fname) as pfile:
+        s = pfile.read()
+    data, code = process_text(s)
+    num_code = os.path.splitext(os.path.basename(fname))[0]
+    root.append(f'''
+        <div class="problem" id="problem-{num_code}">
+                <h3>{data['Title']}</h3>
+                <a href="{data['Source']}">link to leetcode</a>
+                <p>Comment: {data['Comment']}</p>
+                <pre><code>{code}</code></pre>
+            </div>
+    ''')
+
+
 if __name__ == "__main__":
-    dir_name = sys.argv[1]
+    with open('./doc_target.txt', 'r') as f:   
+        targets = f.read().split('\n')
 
-    target = f'docs/{dir_name}'
-    if not os.path.isdir(target):
-        os.mkdir(target)
+    index = pq(filename='docs/template.html')
+    index('title').text(f'LeetCode Mayhem')
+    index('h1').text("LeetCode Mayhem")
 
-        d = pq(filename='docs/index.html')
-        d('#dir').append(f'<a href="{dir_name}">{dir_name}</a>')
+    for dir_name in targets:
+        if len(dir_name) == 0:
+            continue
+        target = f'docs/{dir_name}'
 
-        with open('docs/index.html', 'w') as f:
-            f.write(d.html())
+        index('#dir').append(f'<a href="{dir_name}">{dir_name}</a>')
 
-    t = pq(filename='docs/template.html')
-    t('title').text(f'LeetCode | {dir_name}')
-    t('h1').text(dir_name)
-    with open(os.path.join(target, 'index.html'), 'w') as f:
-        f.write(t.html())
+        t = pq(filename='docs/template.html')
+        t('title').text(f'LeetCode | {dir_name}')
+        t('h1').text(dir_name)
+        with open(os.path.join(target, 'index.html'), 'w') as f:
+            f.write(t.html())
 
-    dom = pq(filename=os.path.join(target, 'index.html'))
-    root = dom('#root')
+        dom = pq(filename=os.path.join(target, 'index.html'))
+        root = dom('#root')
 
-    root.empty()
+        root.empty()
 
-    for fname in glob(os.path.join(dir_name, '*.py')):
-        with open(fname) as pfile:
-            s = pfile.read()
-        data, code = process_text(s)
-        num_code = os.path.splitext(os.path.basename(fname))[0]
-        root.append(f'''
-            <div class="problem" id="problem-{num_code}">
-                    <h3>{data['Title']}</h3>
-                    <a href="{data['Source']}">link to leetcode</a>
-                    <p>Comment: {data['Comment']}</p>
-                    <pre><code>{code}</code></pre>
-                </div>
-        ''')
+        for fname in glob(os.path.join(dir_name, '*.py')):
+            parse_problem(root, fname)
+            parse_problem(index('#root'), fname)
 
-    with open(os.path.join(target, 'index.html'), 'w', encoding='utf8') as f:
-        f.write(dom.html(method='html'))
+        with open(os.path.join(target, 'index.html'), 'w') as f:
+            f.write(dom.html(method='html'))
+    
+    with open('docs/index.html', 'w') as f:
+        f.write(index.html(method='html'))

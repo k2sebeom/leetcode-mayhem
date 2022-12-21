@@ -9,6 +9,11 @@
                 padding-right: 20px;
             }
 
+            #dir {
+                display: flex;
+                flex-direction: column;
+            }
+
             #top-btn {
                 width: 50px;
                 height: 50px;
@@ -36,13 +41,14 @@
     </head>
     <body>
         <h1 id="title">top-100-liked-questions</h1>
-        
+
+        <div id="dir"></div>
         <div id="root">
-            <div class="problem" id="problem-24">
-                    <h3>Swap Nodes in Pairs</h3>
-                    <a href="https://leetcode.com/problems/swap-nodes-in-pairs/">link to leetcode</a>
-                    <p>Comment: Node traversal</p>
-                    <pre><code>class Solution:
+        <div class="problem" id="problem-24">
+                <h3>Swap Nodes in Pairs</h3>
+                <a href="https://leetcode.com/problems/swap-nodes-in-pairs/">link to leetcode</a>
+                <p>Comment: Node traversal</p>
+                <pre><code>class Solution:
     def swapPairs(self, head: Optional[ListNode]) -&gt; Optional[ListNode]:
         # O(n) O(1)
         fast, slow = head, None
@@ -60,8 +66,8 @@
             fast, slow = fast.next, fast
         return head
         </code></pre>
-                </div>
-        </div>
+            </div>
+    </div>
         <div id="button-group">
             <button id="random-btn">Next Random</button>
             <button id="top-btn">Top</button>
