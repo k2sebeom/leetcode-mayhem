@@ -1,5 +1,6 @@
 
 
+# Generate all subsets of the given set
 def all_subsets(L):
     if len(L) == 0:
         return [[]]
@@ -10,6 +11,7 @@ def all_subsets(L):
     subset2 = [[L[0]] + s for s in subset]
     return subset + subset2
 
+# Generate all permutations
 def all_perm(L):
     if len(L) <= 1:
         return [L]

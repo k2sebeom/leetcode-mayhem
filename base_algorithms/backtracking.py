@@ -12,33 +12,26 @@ def backtrack(arg, result, sofar):
         search
 '''
 
+# Given 3x3 matrix, select 3 elements without duplicate rows or columns 
+# What is the minimum score?
 
+
+# Backtrack finds all possible scores
 def backtrack(L, result, sofar):
-    if len(sofar) == len(L):
-        result.append(sofar.copy())
+    if len(sofar) == 3:
+        result.append(sum([L[r][c] for r, c in enumerate(sofar)]))
         return
-    
-    if len(sofar) == 0:
-        for n in L[0]:
-            sofar.append(n)
+
+    for c in range(3):
+        if c not in sofar:
+            sofar.append(c)
             backtrack(L, result, sofar)
             sofar.pop(-1)
-    else:
-        depth = len(sofar)
-        for n in L[depth]:
-            if n & 1 == 0 and sofar[-1] & 1 == 1:
-                sofar.append(n)
-                backtrack(L, result, sofar)
-                sofar.pop(-1)
-            if n & 1 == 1 and sofar[-1] & 1 == 0:
-                sofar.append(n)
-                backtrack(L, result, sofar)
-                sofar.pop(-1)
 
 
 if __name__ == '__main__':
-    L = [[1,2,3],[4,5,6],[7,8,9]]
+    L = [[1,5,3],[2, 4, 7],[5, 3, 5]]
     print(L)
     result = []
     backtrack(L, result, [])
-    print(result)
+    print(min(result))
