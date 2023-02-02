@@ -6,27 +6,36 @@ Comment: Dynamic programming, but there still exists room for optimization
 
 '''
 
-
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        dp = [[] for _ in range(target)]
-        # if ith all the combinations that can make i + 1
-        # ith
-        # 2 + dp[i - 2]
-        # 3 + dp[i - 3]
+        '''Approach
+        - Backtracking
+        2 -> 2 -> 3
         
-        for c in candidates:
-            if c - 1 < target:
-                dp[c - 1].append([c])
-        
-        for i in range(target):
+        [0, 1, 2, 3, 4, 5, 6, 7]
+         n  n. n
+
+        dp = [0, 1, ....., 7]
+             [[], [[]], [[2]], [[3]], [[2, 2]], [[2, 3], [3, 2]]], 
+
+        at each step of dp
+            iterate though candidates
+                c = candidate[i]
+                if dp[d - c] exists:
+                    add all new combinations
+        '''
+
+        dp = [[] for _ in range(target + 1)]
+        dp[0] = [[]]
+
+        for i in range(1, target + 1):
             for c in candidates:
                 if i - c >= 0:
-                    for comb in dp[i - c]:
-                        dp[i].append(comb + [c])
-        # print(dp)
-        for i in range(len(dp[-1])):
-            dp[-1][i].sort()
-            dp[-1][i] = tuple(dp[-1][i])
-        dp[-1] = list(set(dp[-1]))
-        return dp[-1]
+                    for prev in dp[i - c]:
+                        dp[i].append(prev + [c])
+        # print(dp[-1])
+        result = set()
+        for comb in dp[-1]:
+            comb.sort()
+            result.add(tuple(comb))
+        return list(result)
